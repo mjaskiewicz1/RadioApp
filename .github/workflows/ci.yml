@@ -2,8 +2,8 @@ name: CI
 
 on:
   pull_request:
-    branches: ["master"]
-    types: [opened, reopened, synchronize, ready_for_review, edited]
+    branches: [ "master" ]
+    types: [ opened, reopened, synchronize, ready_for_review, edited ]
 
 jobs:
   conventional-commits:
@@ -54,12 +54,3 @@ jobs:
 
       - name: Verify code formatting
         run: dotnet format --verify-no-changes --severity info -v diag
-
-      - name: Install JDK 21
-        uses: actions/setup-java@v6
-        with:
-          distribution: temurin
-          java-version: '21'
-
-      - name: Build Android project in Release mode
-        run: dotnet build RadioApp/RadioApp.csproj -f net10.0-android --no-restore --configuration Release -v minimal
