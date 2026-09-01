@@ -1,15 +1,25 @@
-﻿namespace RadioApp.Views;
+﻿using System.Diagnostics.CodeAnalysis;
 
-public partial class MainPage
+using RadioApp.ViewModels;
+
+namespace RadioApp.Views;
+
+public partial class MainPage : ContentPage
 {
-    private int Count { get; set; }
+    private readonly MainViewModel _viewModel;
 
-    public MainPage()
+    public MainPage(MainViewModel viewModel)
     {
         InitializeComponent();
+
+        _viewModel = viewModel;
+        BindingContext = viewModel;
     }
 
-    private void OnCounterClicked(object? sender, EventArgs e)
+    [SuppressMessage("ReSharper", "AsyncVoidMethod")]
+    protected override async void OnAppearing()
     {
+        base.OnAppearing();
+        await _viewModel.LoadRecommendedAsync();
     }
 }

@@ -2,20 +2,47 @@
 
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="RadioApp.Views.Components.RecommendedStationsView">
-    <Grid RowDefinitions="Auto,*">
+             xmlns:models="clr-namespace:Core.Models;assembly=Core"
+             xmlns:viewModels="clr-namespace:RadioApp.ViewModels"
+             x:Class="RadioApp.Views.Components.RecommendedStationsView"
+             x:DataType="viewModels:MainViewModel">
+
+    <Grid RowDefinitions="Auto,Auto">
         <Label Grid.Row="0" Text="POLECANE" FontAttributes="Bold" FontSize="13" TextColor="#59D65D" />
 
-        <CollectionView Grid.Row="1" Margin="0,10,0,0" ItemsSource="{Binding RecommendedStations}" SelectionMode="None">
+        <CollectionView Grid.Row="1" HeightRequest="130" Margin="0,12,0,0" ItemsSource="{Binding RecommendedStations}" SelectionMode="None" HorizontalScrollBarVisibility="Never">
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="14" />
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="models:RadioStation">
+                    <Grid WidthRequest="76" RowDefinitions="76,Auto" RowSpacing="6">
+                        <Border Grid.Row="0" Padding="4" BackgroundColor="#111315" Stroke="#222629" StrokeShape="RoundRectangle 14">
+                            <Grid>
+                                <Image Source="{Binding Favicon}" Aspect="AspectFit" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                    <Image.Triggers>
+                                        <DataTrigger TargetType="Image" Binding="{Binding Favicon}" Value="{x:Null}">
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                    </Image.Triggers>
+                                </Image>
 
+                                <Label Text="RADIO" IsVisible="False" FontAttributes="Bold" FontSize="11" TextColor="#59D65D" HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding Favicon}" Value="{x:Null}">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Grid>
+                        </Border>
+
+                        <Label Grid.Row="1" Text="{Binding Name}" FontSize="12" TextColor="#F5F5F5" HorizontalTextAlignment="Center" LineBreakMode="TailTruncation" MaxLines="1" />
+                    </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
     </Grid>
+
 </ContentView>

@@ -3,6 +3,9 @@ using Core.Services;
 
 using Microsoft.Extensions.Logging;
 
+using RadioApp.ViewModels;
+using RadioApp.Views;
+
 namespace RadioApp;
 
 public static class MauiProgram
@@ -18,6 +21,8 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
         builder.Services.AddSingleton<IRadioDirectoryService, RadioDirectoryService>();
+        builder.Services.AddSingleton<MainViewModel>();
+        builder.Services.AddSingleton<MainPage>();
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

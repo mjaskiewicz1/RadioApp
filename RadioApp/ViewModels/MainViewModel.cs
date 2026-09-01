@@ -9,14 +9,12 @@ namespace RadioApp.ViewModels;
 
 public class MainViewModel(IRadioDirectoryService radioDirectoryService) : ObservableObject
 {
-    private ImmutableList<RadioStation> _recommendedStations = [];
-
     public ImmutableList<RadioStation> RecommendedStations
     {
-        get => _recommendedStations;
-        private set => SetProperty(ref _recommendedStations, value);
-    }
-    
+        get;
+        private set => SetProperty(ref field, value);
+    } = [];
+
     public async Task LoadRecommendedAsync()
-        => _recommendedStations = await radioDirectoryService.GetRecommendedAsync();
+        => RecommendedStations = await radioDirectoryService.GetRecommendedAsync();
 }
