@@ -4,7 +4,7 @@ using RadioApp.ViewModels;
 
 namespace RadioApp.Views;
 
-public partial class MainPage : ContentPage
+public partial class MainPage
 {
     private readonly MainViewModel _viewModel;
 

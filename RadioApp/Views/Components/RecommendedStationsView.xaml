@@ -11,6 +11,12 @@
         <Label Grid.Row="0" Text="POLECANE" FontAttributes="Bold" FontSize="13" TextColor="#59D65D" />
 
         <CollectionView Grid.Row="1" HeightRequest="130" Margin="0,12,0,0" ItemsSource="{Binding RecommendedStations}" SelectionMode="None" HorizontalScrollBarVisibility="Never">
+            <CollectionView.Triggers>
+                <DataTrigger TargetType="CollectionView" Binding="{Binding HasRecommendedError}" Value="True">
+                    <Setter Property="IsVisible" Value="False" />
+                </DataTrigger>
+            </CollectionView.Triggers>
+
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Horizontal" ItemSpacing="14" />
             </CollectionView.ItemsLayout>
@@ -27,6 +33,18 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
+        <VerticalStackLayout Grid.Row="1" Margin="0,16,0,0" Spacing="10" IsVisible="False">
+            <VerticalStackLayout.Triggers>
+                <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding HasRecommendedError}" Value="True">
+                    <Setter Property="IsVisible" Value="True" />
+                </DataTrigger>
+            </VerticalStackLayout.Triggers>
+
+            <Label Text="{Binding RecommendedErrorMessage}" FontSize="13" TextColor="#96999F" />
+
+            <Button Text="Spróbuj ponownie" Command="{Binding LoadRecommendedCommand}" HorizontalOptions="Start" BackgroundColor="#59D65D" TextColor="#050607" CornerRadius="10" />
+        </VerticalStackLayout>
     </Grid>
 
 </ContentView>
