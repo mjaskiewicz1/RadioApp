@@ -1,3 +1,5 @@
+using System.Collections.Immutable;
+
 using Core.Extensions;
 using Core.Interfaces;
 using Core.Models;
@@ -13,7 +15,7 @@ public sealed class RadioDirectoryService : IRadioDirectoryService
     private readonly RadioBrowserClient _radioBrowserClient = RadioBrowserClient.Factory();
     private const uint MaxResults = 10;
 
-    public async Task<IEnumerable<RadioStation>> GetRecommendedAsync()
+    public async Task<ImmutableList<RadioStation>> GetRecommendedAsync()
     {
         var req = new SearchReq
         {
