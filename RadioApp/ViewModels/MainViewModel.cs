@@ -7,13 +7,10 @@ using Core.Models;
 
 namespace RadioApp.ViewModels;
 
-public class MainViewModel(IRadioDirectoryService radioDirectoryService) : ObservableObject
+public partial class MainViewModel(IRadioDirectoryService radioDirectoryService) : ObservableObject
 {
-    public ImmutableList<RadioStation> RecommendedStations
-    {
-        get;
-        private set => SetProperty(ref field, value);
-    } = [];
+    [ObservableProperty]
+    public partial ImmutableList<RadioStation> RecommendedStations { get; private set; } = [];
 
     public async Task LoadRecommendedAsync()
         => RecommendedStations = await radioDirectoryService.GetRecommendedAsync();

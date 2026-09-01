@@ -22,9 +22,6 @@ public static class StationResExtensions
 
     private static Uri? GetFavicon(Uri? favicon)
     {
-        if (favicon is null)
-            return null;
-
-        return !SupportedFaviconExtensions.Contains(Path.GetExtension(favicon.AbsolutePath)) ? null : favicon;
+        return favicon is null ? null : !SupportedFaviconExtensions.Contains(Path.GetExtension(favicon.AbsolutePath)) ? null : favicon;
     }
 }
