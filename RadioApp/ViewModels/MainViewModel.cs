@@ -14,7 +14,6 @@ public partial class MainViewModel(IRadioDirectoryService radioDirectoryService)
 {
     [ObservableProperty] public partial ImmutableList<RadioStation> RecommendedStations { get; private set; } = [];
     [ObservableProperty] public partial bool HasRecommendedError { get; private set; }
-
     [ObservableProperty] public partial string? RecommendedErrorMessage { get; private set; }
 
     [RelayCommand]
