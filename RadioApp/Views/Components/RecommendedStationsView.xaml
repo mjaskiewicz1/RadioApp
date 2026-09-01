@@ -19,23 +19,7 @@
                 <DataTemplate x:DataType="models:RadioStation">
                     <Grid WidthRequest="76" RowDefinitions="76,Auto" RowSpacing="6">
                         <Border Grid.Row="0" Padding="4" BackgroundColor="#111315" Stroke="#222629" StrokeShape="RoundRectangle 14">
-                            <Grid>
-                                <Image Source="{Binding Favicon}" Aspect="AspectFit" HorizontalOptions="Fill" VerticalOptions="Fill">
-                                    <Image.Triggers>
-                                        <DataTrigger TargetType="Image" Binding="{Binding Favicon}" Value="{x:Null}">
-                                            <Setter Property="IsVisible" Value="False" />
-                                        </DataTrigger>
-                                    </Image.Triggers>
-                                </Image>
-
-                                <Label Text="RADIO" IsVisible="False" FontAttributes="Bold" FontSize="11" TextColor="#59D65D" HorizontalOptions="Center" VerticalOptions="Center">
-                                    <Label.Triggers>
-                                        <DataTrigger TargetType="Label" Binding="{Binding Favicon}" Value="{x:Null}">
-                                            <Setter Property="IsVisible" Value="True" />
-                                        </DataTrigger>
-                                    </Label.Triggers>
-                                </Label>
-                            </Grid>
+                            <Image Source="{Binding Favicon, TargetNullValue=radio_placeholder.svg}" Aspect="AspectFit" HorizontalOptions="Fill" VerticalOptions="Fill" />
                         </Border>
 
                         <Label Grid.Row="1" Text="{Binding Name}" FontSize="12" TextColor="#F5F5F5" HorizontalTextAlignment="Center" LineBreakMode="TailTruncation" MaxLines="1" />

@@ -8,12 +8,23 @@ namespace Core.Extensions;
 
 public static class StationResExtensions
 {
+    private static readonly HashSet<string> SupportedFaviconExtensions = [".png", ".jpg", ".jpeg", ".webp"];
+
     extension(ImmutableList<StationRes> stations)
     {
         public ImmutableList<RadioStation> ToRadioStations()
             => [.. stations.DistinctBy(static x => x.UrlResolved).Select(ToRadioStation)];
     }
 
+
     private static RadioStation ToRadioStation(StationRes station)
-        => new(station.StationUuid, station.Name, station.UrlResolved, station.Favicon, station.Bitrate);
+        => new(station.StationUuid, station.Name, station.UrlResolved, GetFavicon(station.Favicon), station.Bitrate);
+
+    private static Uri? GetFavicon(Uri? favicon)
+    {
+        if (favicon is null)
+            return null;
+
+        return !SupportedFaviconExtensions.Contains(Path.GetExtension(favicon.AbsolutePath)) ? null : favicon;
+    }
 }
