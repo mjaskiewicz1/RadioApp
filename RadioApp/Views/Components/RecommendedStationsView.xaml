@@ -3,7 +3,19 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RadioApp.Views.Components.RecommendedStationsView">
-    <Grid RowDefinitions="Auto, *">
-        <Label Grid.Row="0" Text="POLECANE" FontAttributes="Bold" FontSize="13" TextColor="#59D65D"/>
+    <Grid RowDefinitions="Auto,*">
+        <Label Grid.Row="0" Text="POLECANE" FontAttributes="Bold" FontSize="13" TextColor="#59D65D" />
+
+        <CollectionView Grid.Row="1" Margin="0,10,0,0" ItemsSource="{Binding RecommendedStations}" SelectionMode="None">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </Grid>
 </ContentView>
