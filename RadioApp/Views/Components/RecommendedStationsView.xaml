@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Core.Models;assembly=Core"
+             xmlns:viewModels="clr-namespace:RadioApp.ViewModels"
+             x:Class="RadioApp.Views.Components.RecommendedStationsView"
+             x:DataType="viewModels:MainViewModel">
+
+    <Grid RowDefinitions="Auto,Auto">
+        <Label Grid.Row="0" Text="POLECANE" FontAttributes="Bold" FontSize="13" TextColor="#59D65D" />
+
+        <CollectionView Grid.Row="1" HeightRequest="130" Margin="0,12,0,0" ItemsSource="{Binding RecommendedStations}" SelectionMode="None" HorizontalScrollBarVisibility="Never">
+            <CollectionView.Triggers>
+                <DataTrigger TargetType="CollectionView" Binding="{Binding HasRecommendedError}" Value="True">
+                    <Setter Property="IsVisible" Value="False" />
+                </DataTrigger>
+            </CollectionView.Triggers>
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="14" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:RadioStation">
+                    <Grid WidthRequest="76" RowDefinitions="76,Auto" RowSpacing="6">
+                        <Border Grid.Row="0" Padding="4" BackgroundColor="#111315" Stroke="#222629" StrokeShape="RoundRectangle 14">
+                            <Image Source="{Binding Favicon, TargetNullValue=radio_placeholder.svg}" Aspect="AspectFit" HorizontalOptions="Fill" VerticalOptions="Fill" />
+                        </Border>
+
+                        <Label Grid.Row="1" Text="{Binding Name}" FontSize="12" TextColor="#F5F5F5" HorizontalTextAlignment="Center" LineBreakMode="TailTruncation" MaxLines="1" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <VerticalStackLayout Grid.Row="1" Margin="0,16,0,0" Spacing="10" IsVisible="False">
+            <VerticalStackLayout.Triggers>
+                <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding HasRecommendedError}" Value="True">
+                    <Setter Property="IsVisible" Value="True" />
+                </DataTrigger>
+            </VerticalStackLayout.Triggers>
+
+            <Label Text="{Binding RecommendedErrorMessage}" FontSize="13" TextColor="#96999F" />
+
+            <Button Text="Spróbuj ponownie" Command="{Binding LoadRecommendedCommand}" HorizontalOptions="Start" BackgroundColor="#59D65D" TextColor="#050607" CornerRadius="10" />
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentView>
