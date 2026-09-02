@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:RadioApp.Views.Components"
+             x:Class="RadioApp.Views.Components.PlayerView"
+             x:Name="Root">
+
+    <Grid>
+        <VerticalStackLayout BindingContext="{x:Reference Root}" x:DataType="components:PlayerView" Spacing="12">
+            <Label Text="TERAZ GRA" FontAttributes="Bold" FontSize="13" TextColor="#59D65D" />
+
+            <Border Padding="14" BackgroundColor="#111315" Stroke="#222629" StrokeShape="RoundRectangle 18">
+                <Grid ColumnDefinitions="72,*,52" ColumnSpacing="14">
+                    <Border Grid.Column="0" WidthRequest="72" HeightRequest="72" Padding="4" BackgroundColor="#050607"
+                            Stroke="#222629" StrokeShape="RoundRectangle 14">
+                        <Image Source="{Binding CurrentStation.Favicon, TargetNullValue=radio_placeholder.svg}"
+                               Aspect="AspectFit" HorizontalOptions="Fill" VerticalOptions="Fill" />
+                    </Border>
+
+                    <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                        <Label Text="{Binding CurrentStation.Name, TargetNullValue='Wybierz stację'}"
+                               FontAttributes="Bold" FontSize="16" TextColor="#F5F5F5" LineBreakMode="TailTruncation"
+                               MaxLines="1" />
+                        <Label Text="{Binding CurrentStation.Bitrate, StringFormat='{}{0} kbps', TargetNullValue='— kbps'}"
+                               FontSize="12" TextColor="#96999F" />
+                    </VerticalStackLayout>
+
+                    <Border Grid.Column="2" WidthRequest="48" HeightRequest="48" Padding="0" BackgroundColor="#111315"
+                            Stroke="#59D65D" StrokeThickness="2" StrokeShape="RoundRectangle 24"
+                            HorizontalOptions="Center" VerticalOptions="Center">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnPlaybackButtonTapped" />
+                        </Border.GestureRecognizers>
+
+                        <Grid>
+                            <Path Data="M0,0 L0,16 L13,8 Z" Fill="#59D65D" WidthRequest="13" HeightRequest="16"
+                                  HorizontalOptions="Center" VerticalOptions="Center" TranslationX="1.5">
+                                <Path.Triggers>
+                                    <DataTrigger TargetType="Path" Binding="{Binding IsPlaying}" Value="True">
+                                        <Setter Property="IsVisible" Value="False" />
+                                    </DataTrigger>
+                                </Path.Triggers>
+                            </Path>
+
+                            <HorizontalStackLayout Spacing="4" HorizontalOptions="Center" VerticalOptions="Center"
+                                                   IsVisible="False">
+                                <HorizontalStackLayout.Triggers>
+                                    <DataTrigger TargetType="HorizontalStackLayout" Binding="{Binding IsPlaying}" Value="True">
+                                        <Setter Property="IsVisible" Value="True" />
+                                    </DataTrigger>
+                                </HorizontalStackLayout.Triggers>
+
+                                <BoxView WidthRequest="4" HeightRequest="16" Color="#59D65D" />
+                                <BoxView WidthRequest="4" HeightRequest="16" Color="#59D65D" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+        </VerticalStackLayout>
+    </Grid>
+</ContentView>

@@ -42,11 +42,41 @@
 
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
-        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">26.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
     </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug' And $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+    <!-- Emulator is x86_64. VideoLAN.LibVLC.Android checks RuntimeIdentifiers when adding native VLC libraries. -->
+    <RuntimeIdentifier>android-x64</RuntimeIdentifier>
+    <RuntimeIdentifiers>android-x64</RuntimeIdentifiers>
+
+    <!-- Build a complete APK so Rider deploys the native VLC libraries with the application. -->
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <AndroidExtractNativeLibs>true</AndroidExtractNativeLibs>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release' And $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+    <RuntimeIdentifier>android-x64</RuntimeIdentifier>
+    <RuntimeIdentifiers>android-x64</RuntimeIdentifiers>
+
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <AndroidExtractNativeLibs>true</AndroidExtractNativeLibs>
+
+    <!-- Temporary until System.Text.Json serialization is made trimming-safe. -->
+    <PublishTrimmed>false</PublishTrimmed>
+
+    <!-- Temporary workaround for the current Android AOT build failure. -->
+    <RunAOTCompilation>false</RunAOTCompilation>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)' == 'Release' And $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+    <JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
+    <PublishTrimmed>false</PublishTrimmed>
+    <RunAOTCompilation>false</RunAOTCompilation>
+  </PropertyGroup>
+  
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4"/>
@@ -67,8 +97,10 @@
 
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-        <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0"/>
+        <PackageReference Include="LibVLCSharp.MAUI" Version="3.10.1" />
+        <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.100" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.11" />
+        <PackageReference Include="VideoLAN.LibVLC.Android" Version="3.7.0-beta" />
     </ItemGroup>
 
     <ItemGroup>
