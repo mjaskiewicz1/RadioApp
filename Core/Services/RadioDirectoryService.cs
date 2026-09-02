@@ -23,7 +23,6 @@ public sealed class RadioDirectoryService : IRadioDirectoryService
             HideBroken = true,
             Order = Order.Votes,
             Reverse = true,
-            Codec = Codec.Mp3
         };
         return (await _radioBrowserClient.GetStationsAsync(searchReq: req, limit: MaxResults)).ToRadioStations();
     }
@@ -36,8 +35,7 @@ public sealed class RadioDirectoryService : IRadioDirectoryService
             CountryCode = countryCode,
             HideBroken = true,
             Order = Order.Votes,
-            Reverse = true,
-            Codec = Codec.Mp3
+            Reverse = true
         };
         return (await _radioBrowserClient.GetStationsAsync(searchReq: req, limit: MaxResults)).ToRadioStations();
     }
