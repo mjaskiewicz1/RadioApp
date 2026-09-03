@@ -27,7 +27,7 @@ public sealed class RadioDirectoryService : IRadioDirectoryService
         return (await _radioBrowserClient.GetStationsAsync(searchReq: req, limit: MaxResults)).ToRadioStations();
     }
 
-    public async Task<IEnumerable<RadioStation>> SearchAsync(string name, CountryCode countryCode)
+    public async Task<ImmutableList<RadioStation>> SearchAsync(string name, CountryCode countryCode)
     {
         var req = new SearchReq
         {
@@ -37,6 +37,6 @@ public sealed class RadioDirectoryService : IRadioDirectoryService
             Order = Order.Votes,
             Reverse = true
         };
-        return (await _radioBrowserClient.GetStationsAsync(searchReq: req, limit: MaxResults)).ToRadioStations();
+        return [.. (await _radioBrowserClient.GetStationsAsync(searchReq: req, limit: MaxResults)).ToRadioStations()];
     }
 }

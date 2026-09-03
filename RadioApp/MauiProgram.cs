@@ -23,6 +23,7 @@ public static class MauiProgram
         }).UseLibVLCSharp();
         builder.Services.AddSingleton<IRadioDirectoryService, RadioDirectoryService>();
         builder.Services.AddSingleton<MainViewModel>();
+        builder.Services.AddSingleton<SearchViewModel>();
         builder.Services.AddSingleton<MainPage>();
 #if DEBUG
         builder.Logging.AddDebug();

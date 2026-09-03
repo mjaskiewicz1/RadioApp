@@ -7,12 +7,13 @@ namespace RadioApp.Views;
 public partial class MainPage
 {
     private readonly MainViewModel _viewModel;
-
-    public MainPage(MainViewModel viewModel)
+    public SearchViewModel SearchViewModel { get; }
+    public MainPage(MainViewModel viewModel, SearchViewModel searchViewModel)
     {
         InitializeComponent();
 
         _viewModel = viewModel;
+        SearchViewModel = searchViewModel;
         BindingContext = viewModel;
     }
 
