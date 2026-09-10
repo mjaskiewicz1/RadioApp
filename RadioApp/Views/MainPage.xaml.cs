@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
+using RadioApp.Events;
 using RadioApp.ViewModels;
 using RadioApp.Views.Components;
 
