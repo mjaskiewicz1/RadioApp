@@ -22,13 +22,9 @@ public partial class StationSearchViewModel(
     private int _searchVersion;
 
     [ObservableProperty] public partial bool IsSearchVisible { get; private set; }
-
     [ObservableProperty] public partial bool IsSearching { get; private set; }
-
     [ObservableProperty] public partial string SearchText { get; set; } = string.Empty;
-
     [ObservableProperty] public partial CountryCode SelectedCountry { get; private set; } = CountryCode.Pl;
-
     [ObservableProperty] public partial ImmutableList<RadioStation> Results { get; private set; } = [];
 
     [RelayCommand]
