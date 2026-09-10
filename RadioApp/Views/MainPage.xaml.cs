@@ -24,7 +24,6 @@ public partial class MainPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-
         await _viewModel.LoadRecommendedAsync();
     }
 
