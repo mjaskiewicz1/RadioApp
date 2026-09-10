@@ -1,26 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:components="clr-namespace:RadioApp.Views.Components"
-             xmlns:viewModels="clr-namespace:RadioApp.ViewModels"
-             x:Class="RadioApp.Views.MainPage"
-             x:DataType="viewModels:MainViewModel"
-             BackgroundColor="#050607"
-             Shell.NavBarIsVisible="False">
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:components="clr-namespace:RadioApp.Views.Components"
+    xmlns:viewModels="clr-namespace:RadioApp.ViewModels"
+    x:Class="RadioApp.Views.MainPage"
+    x:Name="Root"
+    x:DataType="viewModels:MainViewModel"
+    BackgroundColor="#050607"
+    Shell.NavBarIsVisible="False">
 
     <Grid RowDefinitions="Auto,Auto,*">
-        <components:HeaderView Grid.Row="0" />
 
-        <Grid Grid.Row="1" Padding="28,0,28,20">
-            <components:PlayerView CurrentStation="{Binding SelectedStation}" />
+        <!-- Header uses the search ViewModel -->
+        <components:HeaderView
+            Grid.Row="0"
+            BindingContext="{Binding
+                Source={x:Reference Root},
+                Path=SearchViewModel}" />
+
+        <!-- Player uses the main ViewModel -->
+        <Grid
+            Grid.Row="1"
+            Padding="28,0,28,20">
+
+            <components:PlayerView
+                CurrentStation="{Binding SelectedStation}" />
         </Grid>
 
         <ScrollView Grid.Row="2">
-            <VerticalStackLayout Padding="28,0" Spacing="20">
-                <components:RecommendedStationsView />
+            <VerticalStackLayout
+                Padding="28,0"
+                Spacing="20">
+
+                <!-- Search uses the search ViewModel -->
+                <components:StationSearchView
+                    BindingContext="{Binding
+                        Source={x:Reference Root},
+                        Path=SearchViewModel}"
+                    IsVisible="{Binding
+                        Source={x:Reference Root},
+                        Path=SearchViewModel.IsSearchVisible}"
+                    StationSelected="OnSearchStationSelected" />
+
+                <!-- Recommended stations use the main ViewModel -->
+                <components:RecommendedStationsView>
+                    <components:RecommendedStationsView.Triggers>
+                        <DataTrigger TargetType="components:RecommendedStationsView"
+                                     Binding="{Binding Source={x:Reference Root}, Path=SearchViewModel.IsSearchVisible}"
+                                     Value="True">
+                            <Setter
+                                Property="IsVisible"
+                                Value="False" />
+                        </DataTrigger>
+                    </components:RecommendedStationsView.Triggers>
+                </components:RecommendedStationsView>
             </VerticalStackLayout>
         </ScrollView>
     </Grid>
-
 </ContentPage>

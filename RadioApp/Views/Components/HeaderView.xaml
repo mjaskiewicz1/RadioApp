@@ -2,15 +2,31 @@
 
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="RadioApp.Views.Components.HeaderView">
-    
-    <Label
-        Margin="0,20,0,18"
-        CharacterSpacing="8"
-        FontAttributes="Bold"
-        FontSize="24"
-        HorizontalOptions="Center"
-        Text="RADIO"
-        TextColor="#59D65D" />
+             xmlns:viewModels="clr-namespace:RadioApp.ViewModels"
+             x:Class="RadioApp.Views.Components.HeaderView"
+             x:DataType="viewModels:StationSearchViewModel">
 
+    <Grid Margin="28,20,28,18" ColumnDefinitions="44,*,44">
+        <Label Grid.Column="1" Text="RADIO" CharacterSpacing="8"
+               FontAttributes="Bold" FontSize="24" TextColor="#59D65D"
+               HorizontalOptions="Center" VerticalOptions="Center" />
+
+        <Grid Grid.Column="2" WidthRequest="44" HeightRequest="44"
+              HorizontalOptions="End">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding OpenSearchCommand}" />
+            </Grid.GestureRecognizers>
+
+            <Grid.Triggers>
+                <DataTrigger TargetType="Grid" Binding="{Binding IsSearchVisible}" Value="True">
+                    <Setter Property="IsVisible" Value="False" />
+                </DataTrigger>
+            </Grid.Triggers>
+
+            <Path Data="M9,2 A7,7 0 1 0 9,16 A7,7 0 1 0 9,2 M14,14 L20,20"
+                  Stroke="#59D65D" StrokeThickness="2"
+                  WidthRequest="22" HeightRequest="22"
+                  HorizontalOptions="Center" VerticalOptions="Center" />
+        </Grid>
+    </Grid>
 </ContentView>

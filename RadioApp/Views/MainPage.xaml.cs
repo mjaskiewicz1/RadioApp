@@ -1,18 +1,22 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
 using RadioApp.ViewModels;
+using RadioApp.Views.Components;
 
 namespace RadioApp.Views;
 
 public partial class MainPage
 {
     private readonly MainViewModel _viewModel;
+    public StationSearchViewModel SearchViewModel { get; }
 
-    public MainPage(MainViewModel viewModel)
+    public MainPage(MainViewModel viewModel, StationSearchViewModel searchViewModel)
     {
+        _viewModel = viewModel;
+        SearchViewModel = searchViewModel;
+
         InitializeComponent();
 
-        _viewModel = viewModel;
         BindingContext = viewModel;
     }
 
@@ -20,6 +24,12 @@ public partial class MainPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+
         await _viewModel.LoadRecommendedAsync();
+    }
+
+    private void OnSearchStationSelected(object? sender, StationSelectedEventArgs e)
+    {
+        _viewModel.SelectedStation = e.Station;
     }
 }
