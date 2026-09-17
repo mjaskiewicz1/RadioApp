@@ -17,7 +17,7 @@ public partial class StationSearchView
     {
         if (sender is not Grid { BindingContext: RadioStation station })
             return;
-        
+
         StationSelected?.Invoke(this, new StationSelectedEventArgs(station));
     }
 
@@ -28,7 +28,7 @@ public partial class StationSearchView
         if (sender is not Entry entry ||
             entry.Handler?.PlatformView is not Android.Widget.EditText platformView)
             return;
-        
+
         platformView.BackgroundTintList =
             Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
 #endif

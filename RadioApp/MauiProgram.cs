@@ -16,11 +16,8 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
 #if ANDROID
-        Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("RemoveUnderline", (handler, _) =>
-        {
-            handler.PlatformView.BackgroundTintList =
-                Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
-        });
+        Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("RemoveUnderline", (handler, _) => handler.PlatformView.BackgroundTintList =
+                Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent));
 #endif
         var builder = MauiApp.CreateBuilder();
         builder.UseMauiApp<App>().ConfigureFonts(fonts =>
