@@ -14,12 +14,17 @@ public static class StationResExtensions
     {
         public ImmutableList<RadioStation> ToRadioStations()
             => [.. stations
-                .GroupBy(static x => x.Name, StringComparer.OrdinalIgnoreCase)
-                .Select(static group => group
-                    .OrderByDescending(static station => GetCodecPriority(station.Codec))
-                    .First())
+                .GroupBy(static station => station.UrlResolved)
+                .Select(static group => SelectBestStation(group))
+                .GroupBy(static station => station.Name, StringComparer.OrdinalIgnoreCase)
+                .Select(static group => SelectBestStation(group))
                 .Select(ToRadioStation)];
     }
+
+    private static StationRes SelectBestStation(IEnumerable<StationRes> stations)
+        => stations
+            .OrderByDescending(static station => GetCodecPriority(station.Codec))
+            .First();
 
     private static RadioStation ToRadioStation(StationRes station)
         => new(station.StationUuid, station.Name, station.UrlResolved, GetFavicon(station.Favicon), station.Bitrate);

@@ -9,5 +9,5 @@ namespace Core.Interfaces;
 public interface IRadioDirectoryService
 {
     Task<ImmutableList<RadioStation>> GetRecommendedAsync();
-    Task<IEnumerable<RadioStation>> SearchAsync(string name, CountryCode countryCode);
+    Task<ImmutableList<RadioStation>> SearchAsync(string name, CountryCode countryCode);
 }
