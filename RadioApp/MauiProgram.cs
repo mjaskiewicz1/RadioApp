@@ -1,10 +1,12 @@
-﻿using Core.Interfaces;
+﻿using Core.Data.Repositories;
+using Core.Interfaces;
 using Core.Services;
 
 using LibVLCSharp.MAUI;
 
 using Microsoft.Extensions.Logging;
 
+using RadioApp.Extensions;
 using RadioApp.ViewModels;
 using RadioApp.Views;
 
@@ -29,6 +31,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<MainViewModel>();
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<StationSearchViewModel>();
+        builder.Services.AddScoped<IFavoriteStationRepository, FavoriteStationRepository>();
+        builder.AddLocalDatabase();
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
