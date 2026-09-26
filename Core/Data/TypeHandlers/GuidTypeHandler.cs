@@ -17,6 +17,6 @@ public sealed class GuidTypeHandler : SqlMapper.TypeHandler<Guid>
         {
             Guid guid => guid,
             string guid => Guid.Parse(guid),
-            _ => throw new DataException($"Cannot convert {value.GetType().Name} to Guid.")
+            _ => throw new DataException($"Cannot convert {value.GetType()?.Name} to Guid.")
         };
 }

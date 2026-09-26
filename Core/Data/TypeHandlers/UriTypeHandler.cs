@@ -17,6 +17,6 @@ public sealed class UriTypeHandler : SqlMapper.TypeHandler<Uri>
         {
             string uri => new Uri(uri, UriKind.Absolute),
             Uri uri => uri,
-            _ => throw new DataException($"Cannot convert {value.GetType().Name} to Uri.")
+            _ => throw new DataException($"Cannot convert {value.GetType()?.Name} to Uri.")
         };
 }
