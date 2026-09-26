@@ -27,6 +27,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<MainViewModel>();
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<StationSearchViewModel>();
+        builder.Services.AddSingleton<FavoriteStationsViewModel>();
         builder.Services.AddScoped<IFavoriteStationRepository, FavoriteStationRepository>();
         builder.AddLocalDatabase();
 #if DEBUG
