@@ -23,7 +23,7 @@ public partial class FavoriteStationsView
 
     private void OnRemoveTapped(object? sender, EventArgs e)
     {
-        if (sender is not Button { BindingContext: FavoriteStation station })
+        if (sender is not ImageButton { BindingContext: FavoriteStation station })
             return;
 
         StationRemoveRequested?.Invoke(this, new FavoriteStationEventArgs(station));

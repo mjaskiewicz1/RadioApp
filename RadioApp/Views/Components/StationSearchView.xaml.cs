@@ -36,7 +36,7 @@ public partial class StationSearchView
 
     private void OnFavoriteTapped(object? sender, EventArgs e)
     {
-        if (sender is not Button { BindingContext: RadioStation station })
+        if (sender is not ImageButton { BindingContext: RadioStation station })
             return;
 
         FavoriteToggleRequested?.Invoke(this, new StationSelectedEventArgs(station));

@@ -163,24 +163,18 @@
                             </VerticalStackLayout>
                         </Grid>
 
-                        <Button Grid.Column="1" WidthRequest="44" HeightRequest="44" Padding="0"
-                                BackgroundColor="Transparent" BorderWidth="0" FontSize="26" TextColor="#96999F"
-                                Clicked="OnFavoriteTapped" SemanticProperties.Description="{Binding Name}"
-                                SemanticProperties.Hint="Dodaj lub usuń z ulubionych">
-                            <Button.Text>
+                        <ImageButton Grid.Column="1" WidthRequest="44" HeightRequest="44" Padding="10"
+                                     BackgroundColor="Transparent" BorderWidth="0" Aspect="AspectFit"
+                                     Clicked="OnFavoriteTapped" SemanticProperties.Description="{Binding Name}"
+                                     SemanticProperties.Hint="Dodaj lub usuń z ulubionych">
+                            <ImageButton.Source>
                                 <MultiBinding Converter="{StaticResource FavoriteHeartConverter}" Mode="OneWay">
                                     <Binding Path="Id" />
                                     <Binding Source="{x:Reference Root}" Path="FavoriteStations" x:DataType="components:StationSearchView" />
                                     <Binding Source="{x:Reference Root}" Path="FavoriteStations.Count" x:DataType="components:StationSearchView" />
                                 </MultiBinding>
-                            </Button.Text>
-                            <Button.Triggers>
-                                <Trigger TargetType="Button" Property="Text" Value="♥">
-                                    <Setter Property="TextColor" Value="#59D65D" />
-                                    <Setter Property="SemanticProperties.Hint" Value="Usuń z ulubionych" />
-                                </Trigger>
-                            </Button.Triggers>
-                        </Button>
+                            </ImageButton.Source>
+                        </ImageButton>
 
                         <BoxView Grid.Row="1" Grid.ColumnSpan="2" Color="#222629" HeightRequest="1" />
                     </Grid>

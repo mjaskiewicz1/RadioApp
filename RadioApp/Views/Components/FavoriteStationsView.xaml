@@ -43,10 +43,10 @@
                             </VerticalStackLayout>
                         </Grid>
 
-                        <Button Grid.Column="1" Text="♥" WidthRequest="44" HeightRequest="44" Padding="0"
-                                BackgroundColor="Transparent" BorderWidth="0" FontSize="26" TextColor="#59D65D"
-                                Clicked="OnRemoveTapped" SemanticProperties.Description="{Binding Name}"
-                                SemanticProperties.Hint="Usuń z ulubionych" />
+                        <ImageButton Grid.Column="1" Source="favorite_filled.png" WidthRequest="44" HeightRequest="44"
+                                     Padding="10" BackgroundColor="Transparent" BorderWidth="0" Aspect="AspectFit"
+                                     Clicked="OnRemoveTapped" SemanticProperties.Description="{Binding Name}"
+                                     SemanticProperties.Hint="Usuń z ulubionych" />
 
                         <BoxView Grid.Row="1" Grid.ColumnSpan="2" Color="#222629" HeightRequest="1" />
                     </Grid>
