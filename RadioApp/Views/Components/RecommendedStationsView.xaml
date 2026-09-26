@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:Core.Models;assembly=Core"
              xmlns:viewModels="clr-namespace:RadioApp.ViewModels"
+             xmlns:behaviors="clr-namespace:RadioApp.Behaviors"
              x:Class="RadioApp.Views.Components.RecommendedStationsView"
              x:DataType="viewModels:MainViewModel">
 
@@ -24,10 +25,12 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:RadioStation">
-                    <Grid WidthRequest="76" RowDefinitions="76,Auto" RowSpacing="6">
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnStationTapped" />
-                        </Grid.GestureRecognizers>
+                    <Grid x:Name="StationContent" WidthRequest="76" RowDefinitions="76,Auto" RowSpacing="6">
+                        <Grid.Behaviors>
+                            <behaviors:StationTouchBehavior
+                                BindingContext="{Binding Source={x:Reference StationContent}, Path=BindingContext, x:DataType=Grid}"
+                                StationSelected="OnStationSelected" FavoriteAddRequested="OnFavoriteAddRequested" />
+                        </Grid.Behaviors>
 
                         <Border Grid.Row="0" Padding="4" BackgroundColor="#111315" Stroke="#222629"
                                 StrokeShape="RoundRectangle 14">

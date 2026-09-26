@@ -1,18 +1,14 @@
 ﻿using Core.Data.Repositories;
 using Core.Interfaces;
 using Core.Services;
-
 using LibVLCSharp.MAUI;
-
 using Microsoft.Extensions.Logging;
-
 using RadioApp.Extensions;
 using RadioApp.ViewModels;
 using RadioApp.Views;
-
+using CommunityToolkit.Maui;
 
 namespace RadioApp;
-
 public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
@@ -26,7 +22,7 @@ public static class MauiProgram
         {
             fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
             fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-        }).UseLibVLCSharp();
+        }).UseLibVLCSharp().UseMauiCommunityToolkit();
         builder.Services.AddSingleton<IRadioDirectoryService, RadioDirectoryService>();
         builder.Services.AddSingleton<MainViewModel>();
         builder.Services.AddSingleton<MainPage>();

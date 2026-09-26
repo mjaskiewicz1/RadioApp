@@ -11,7 +11,7 @@ public static class MauiAppBuilderExtensions
 {
     extension(MauiAppBuilder builder)
     {
-        public MauiAppBuilder AddLocalDatabase()
+        public void AddLocalDatabase()
         {
             SqlMapper.AddTypeHandler(new UriTypeHandler());
 
@@ -24,12 +24,9 @@ public static class MauiAppBuilderExtensions
                 Cache = SqliteCacheMode.Shared
             }.ToString();
 
-            builder.Services.AddSingleton(
-                new SqliteConnectionFactory(connectionString));
+            builder.Services.AddSingleton(new SqliteConnectionFactory(connectionString));
 
             builder.Services.AddSingleton<DatabaseInitializer>();
-
-            return builder;
         }
     }
 }
