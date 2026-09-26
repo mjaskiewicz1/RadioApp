@@ -14,6 +14,7 @@ public static class MauiAppBuilderExtensions
         public void AddLocalDatabase()
         {
             SqlMapper.AddTypeHandler(new UriTypeHandler());
+            SqlMapper.AddTypeHandler(new GuidTypeHandler());
 
             var databasePath = Path.Combine(FileSystem.AppDataDirectory, "radioapp.db3");
 
