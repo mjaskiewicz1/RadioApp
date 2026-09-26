@@ -8,7 +8,7 @@ using RadioApp.Events;
 
 namespace RadioApp.Behaviors;
 
-public sealed class StationTouchBehavior : TouchBehavior
+public sealed partial class StationTouchBehavior : TouchBehavior
 {
     public event EventHandler<StationSelectedEventArgs>? StationSelected;
     public event EventHandler<StationSelectedEventArgs>? FavoriteAddRequested;

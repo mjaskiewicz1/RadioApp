@@ -1,14 +1,19 @@
-﻿using Core.Data.Repositories;
+﻿using CommunityToolkit.Maui;
+
+using Core.Data.Repositories;
 using Core.Interfaces;
 using Core.Services;
+
 using LibVLCSharp.MAUI;
+
 using Microsoft.Extensions.Logging;
+
 using RadioApp.Extensions;
 using RadioApp.ViewModels;
 using RadioApp.Views;
-using CommunityToolkit.Maui;
 
 namespace RadioApp;
+
 public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()

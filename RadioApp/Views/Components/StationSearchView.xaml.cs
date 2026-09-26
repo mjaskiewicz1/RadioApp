@@ -42,7 +42,7 @@ public partial class StationSearchView
         FavoriteToggleRequested?.Invoke(this, new StationSelectedEventArgs(station));
     }
 
-    private  void OnSearchEntryHandlerChanged(object? sender, EventArgs e)
+    private void OnSearchEntryHandlerChanged(object? sender, EventArgs e)
     {
 #if ANDROID
         if (sender is not Entry entry ||
