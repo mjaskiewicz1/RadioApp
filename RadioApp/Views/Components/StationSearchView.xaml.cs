@@ -1,3 +1,6 @@
+using System.Collections.ObjectModel;
+
+using Core.Data.Entities;
 using Core.Models;
 
 using RadioApp.Events;
@@ -7,20 +10,37 @@ namespace RadioApp.Views.Components;
 public partial class StationSearchView
 {
     public event EventHandler<StationSelectedEventArgs>? StationSelected;
+    public event EventHandler<StationSelectedEventArgs>? FavoriteAddRequested;
+    public event EventHandler<StationSelectedEventArgs>? FavoriteToggleRequested;
+
+    public static readonly BindableProperty FavoriteStationsProperty =
+        BindableProperty.Create(nameof(FavoriteStations), typeof(ObservableCollection<FavoriteStation>),
+            typeof(StationSearchView));
+
+    public ObservableCollection<FavoriteStation>? FavoriteStations
+    {
+        get => (ObservableCollection<FavoriteStation>?)GetValue(FavoriteStationsProperty);
+        set => SetValue(FavoriteStationsProperty, value);
+    }
 
     public StationSearchView()
     {
         InitializeComponent();
     }
 
-    private void OnStationTapped(object? sender, TappedEventArgs e)
+    private void OnStationSelected(object? sender, StationSelectedEventArgs e)
+        => StationSelected?.Invoke(this, e);
+
+    private void OnFavoriteAddRequested(object? sender, StationSelectedEventArgs e)
+        => FavoriteAddRequested?.Invoke(this, e);
+
+    private void OnFavoriteTapped(object? sender, EventArgs e)
     {
-        if (sender is not Grid { BindingContext: RadioStation station })
+        if (sender is not ImageButton { BindingContext: RadioStation station })
             return;
 
-        StationSelected?.Invoke(this, new StationSelectedEventArgs(station));
+        FavoriteToggleRequested?.Invoke(this, new StationSelectedEventArgs(station));
     }
-
 
     private void OnSearchEntryHandlerChanged(object? sender, EventArgs e)
     {

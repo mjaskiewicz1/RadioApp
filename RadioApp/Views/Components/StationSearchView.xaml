@@ -5,11 +5,19 @@
              xmlns:models="clr-namespace:Core.Models;assembly=Core"
              xmlns:enums="clr-namespace:RadioBrowser.Api.Models.Enums;assembly=RadioBrowser"
              xmlns:viewModels="clr-namespace:RadioApp.ViewModels"
+             xmlns:components="clr-namespace:RadioApp.Views.Components"
+             xmlns:behaviors="clr-namespace:RadioApp.Behaviors"
+             xmlns:converters="clr-namespace:RadioApp.Converters"
              x:Class="RadioApp.Views.Components.StationSearchView"
+             x:Name="Root"
              x:DataType="viewModels:StationSearchViewModel">
 
-    <VerticalStackLayout Spacing="12">
-        <Border HeightRequest="46"
+    <ContentView.Resources>
+        <converters:FavoriteHeartConverter x:Key="FavoriteHeartConverter" />
+    </ContentView.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" RowSpacing="12">
+        <Border Grid.Row="0" HeightRequest="46"
                 Padding="12,0,4,0"
                 BackgroundColor="#111315"
                 Stroke="#222629"
@@ -52,7 +60,7 @@
             </Grid>
         </Border>
 
-        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="8">
             <Border Grid.Column="0"
                     HeightRequest="38"
                     BackgroundColor="#111315"
@@ -106,13 +114,24 @@
             </Border>
         </Grid>
 
-        <Label Margin="0,4,0,0"
-               Text="WYNIKI"
-               FontAttributes="Bold"
-               FontSize="13"
-               TextColor="#59D65D" />
+        <VerticalStackLayout Grid.Row="2" Spacing="8" Margin="0,4,0,0">
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Text="WYNIKI" FontAttributes="Bold" FontSize="13" TextColor="#59D65D" />
+                <ActivityIndicator Grid.Column="1" IsRunning="{Binding IsSearching}"
+                                   IsVisible="{Binding IsSearching}" Color="#59D65D"
+                                   WidthRequest="18" HeightRequest="18" />
+            </Grid>
 
-        <CollectionView HeightRequest="280"
+            <Label Text="{Binding SearchErrorMessage}" FontSize="12" TextColor="#96999F">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding SearchErrorMessage}" Value="{x:Null}">
+                        <Setter Property="IsVisible" Value="False" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+        </VerticalStackLayout>
+
+        <CollectionView Grid.Row="3"
                         ItemsSource="{Binding Results, Mode=OneWay}"
                         SelectionMode="None"
                         VerticalScrollBarVisibility="Never">
@@ -122,37 +141,42 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:RadioStation">
-                    <Grid ColumnDefinitions="56,*" ColumnSpacing="12">
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnStationTapped" />
-                        </Grid.GestureRecognizers>
+                    <Grid ColumnDefinitions="*,44" RowDefinitions="Auto,1" ColumnSpacing="12" RowSpacing="10">
+                        <Grid x:Name="StationContent" ColumnDefinitions="44,*" ColumnSpacing="12">
+                            <Grid.Behaviors>
+                                <behaviors:StationTouchBehavior
+                                    BindingContext="{Binding Source={x:Reference StationContent}, Path=BindingContext, x:DataType=Grid}"
+                                    StationSelected="OnStationSelected" FavoriteAddRequested="OnFavoriteAddRequested" />
+                            </Grid.Behaviors>
 
-                        <Border Grid.Column="0"
-                                HeightRequest="56"
-                                WidthRequest="56"
-                                Padding="4"
-                                BackgroundColor="#111315"
-                                Stroke="#222629"
-                                StrokeShape="RoundRectangle 14">
-                            <Image Source="{Binding Favicon, TargetNullValue=radio_placeholder.svg}"
-                                   Aspect="AspectFit"
-                                   HorizontalOptions="Fill"
-                                   VerticalOptions="Fill" />
-                        </Border>
+                            <Border WidthRequest="44" HeightRequest="44" Padding="4" BackgroundColor="#111315"
+                                    Stroke="#222629" StrokeShape="RoundRectangle 12">
+                                <Image Source="{Binding Favicon, TargetNullValue=radio_placeholder.svg}"
+                                       Aspect="AspectFit" HorizontalOptions="Fill" VerticalOptions="Fill" />
+                            </Border>
 
-                        <VerticalStackLayout Grid.Column="1"
-                                             Spacing="2"
-                                             VerticalOptions="Center">
-                            <Label Text="{Binding Name}"
-                                   FontSize="14"
-                                   TextColor="#F5F5F5"
-                                   LineBreakMode="TailTruncation"
-                                   MaxLines="1" />
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="{Binding Name}" FontSize="14" TextColor="#F5F5F5"
+                                       LineBreakMode="TailTruncation" MaxLines="1" />
+                                <Label Text="{Binding Bitrate, StringFormat='{}{0} kbps', TargetNullValue='— kbps'}"
+                                       FontSize="12" TextColor="#96999F" />
+                            </VerticalStackLayout>
+                        </Grid>
 
-                            <Label Text="{Binding Bitrate, StringFormat='{0} kbps'}"
-                                   FontSize="12"
-                                   TextColor="#96999F" />
-                        </VerticalStackLayout>
+                        <ImageButton Grid.Column="1" WidthRequest="44" HeightRequest="44" Padding="10"
+                                     BackgroundColor="Transparent" BorderWidth="0" Aspect="AspectFit"
+                                     Clicked="OnFavoriteTapped" SemanticProperties.Description="{Binding Name}"
+                                     SemanticProperties.Hint="Dodaj lub usuń z ulubionych">
+                            <ImageButton.Source>
+                                <MultiBinding Converter="{StaticResource FavoriteHeartConverter}" Mode="OneWay">
+                                    <Binding Path="Id" />
+                                    <Binding Source="{x:Reference Root}" Path="FavoriteStations" x:DataType="components:StationSearchView" />
+                                    <Binding Source="{x:Reference Root}" Path="FavoriteStations.Count" x:DataType="components:StationSearchView" />
+                                </MultiBinding>
+                            </ImageButton.Source>
+                        </ImageButton>
+
+                        <BoxView Grid.Row="1" Grid.ColumnSpan="2" Color="#222629" HeightRequest="1" />
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
@@ -163,6 +187,9 @@
                        TextColor="#96999F" />
             </CollectionView.EmptyView>
         </CollectionView>
-    </VerticalStackLayout>
+
+        <Label Grid.Row="4" Text="Przytrzymaj stację, aby dodać do ulubionych"
+               FontSize="11" TextColor="#96999F" HorizontalTextAlignment="Center" />
+    </Grid>
 
 </ContentView>

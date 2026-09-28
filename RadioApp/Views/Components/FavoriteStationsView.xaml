@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:entities="clr-namespace:Core.Data.Entities;assembly=Core"
+             xmlns:viewModels="clr-namespace:RadioApp.ViewModels"
+             xmlns:behaviors="clr-namespace:RadioApp.Behaviors"
+             x:Class="RadioApp.Views.Components.FavoriteStationsView"
+             x:DataType="viewModels:FavoriteStationsViewModel">
+
+    <Grid RowDefinitions="Auto,*" RowSpacing="12">
+        <Label Text="ULUBIONE" FontAttributes="Bold" FontSize="13" TextColor="#59D65D" />
+
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding FavoriteStations}"
+                        SelectionMode="None"
+                        VerticalScrollBarVisibility="Never">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="entities:FavoriteStation">
+                    <Grid ColumnDefinitions="*,44" RowDefinitions="Auto,1" ColumnSpacing="12" RowSpacing="10">
+                        <Grid x:Name="StationContent" ColumnDefinitions="44,*" ColumnSpacing="12">
+                            <Grid.Behaviors>
+                                <behaviors:StationTouchBehavior
+                                    BindingContext="{Binding Source={x:Reference StationContent}, Path=BindingContext, x:DataType=Grid}"
+                                    StationSelected="OnStationSelected" FavoriteAddRequested="OnFavoriteAddRequested" />
+                            </Grid.Behaviors>
+
+                            <Border Grid.Column="0" WidthRequest="44" HeightRequest="44" Padding="4"
+                                    BackgroundColor="#111315" Stroke="#222629" StrokeShape="RoundRectangle 12">
+                                <Image Source="{Binding Favicon, TargetNullValue=radio_placeholder.svg}"
+                                       Aspect="AspectFit" HorizontalOptions="Fill" VerticalOptions="Fill" />
+                            </Border>
+
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="{Binding Name}" FontSize="14" TextColor="#F5F5F5"
+                                       LineBreakMode="TailTruncation" MaxLines="1" />
+                                <Label Text="{Binding Bitrate, StringFormat='{}{0} kbps', TargetNullValue='— kbps'}"
+                                       FontSize="12" TextColor="#96999F" />
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <ImageButton Grid.Column="1" Source="favorite_filled.png" WidthRequest="44" HeightRequest="44"
+                                     Padding="10" BackgroundColor="Transparent" BorderWidth="0" Aspect="AspectFit"
+                                     Clicked="OnRemoveTapped" SemanticProperties.Description="{Binding Name}"
+                                     SemanticProperties.Hint="Usuń z ulubionych" />
+
+                        <BoxView Grid.Row="1" Grid.ColumnSpan="2" Color="#222629" HeightRequest="1" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <CollectionView.EmptyView>
+                <Label Text="Brak ulubionych stacji" FontSize="12" TextColor="#96999F" />
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </Grid>
+
+</ContentView>
