@@ -38,25 +38,26 @@ public partial class MainPage
     private void OnStationSelected(object? sender, StationSelectedEventArgs e)
         => _viewModel.SelectedStation = e.Station;
 
-    [SuppressMessage("ReSharper", "AsyncVoidMethod")]
+
     private async void OnFavoriteAddRequested(object? sender, StationSelectedEventArgs e)
-        => await UpdateFavoritesAsync(async () => await FavoriteStationsViewModel.AddAsync(e.Station)
-            ? "Dodano do ulubionych"
-            : "Stacja jest już w ulubionych");
+        => await UpdateFavoritesAsync(async () =>
+            await FavoriteStationsViewModel.AddAsync(e.Station)
+                ? "Dodano do ulubionych"
+                : "Stacja jest już w ulubionych");
 
-    [SuppressMessage("ReSharper", "AsyncVoidMethod")]
+
     private async void OnFavoriteToggleRequested(object? sender, StationSelectedEventArgs e)
-        => await UpdateFavoritesAsync(async () => await FavoriteStationsViewModel.ToggleAsync(e.Station)
-            ? "Dodano do ulubionych"
-            : "Usunięto z ulubionych");
+        => await UpdateFavoritesAsync(async () =>
+            await FavoriteStationsViewModel.ToggleAsync(e.Station) ? "Dodano do ulubionych" : "Usunięto z ulubionych");
 
-    [SuppressMessage("ReSharper", "AsyncVoidMethod")]
+
     private async void OnFavoriteStationRemoveRequested(object? sender, FavoriteStationEventArgs e)
-        => await UpdateFavoritesAsync(async () => await FavoriteStationsViewModel.RemoveAsync(e.Station)
-            ? "Usunięto z ulubionych"
-            : "Stacji nie ma już w ulubionych");
+        => await UpdateFavoritesAsync(async () =>
+            await FavoriteStationsViewModel.RemoveAsync(e.Station)
+                ? "Usunięto z ulubionych"
+                : "Stacji nie ma już w ulubionych");
 
-    [SuppressMessage("ReSharper", "AsyncVoidMethod")]
+
     private async void OnRetryFavoritesClicked(object? sender, EventArgs e)
         => await LoadFavoritesAsync();
 

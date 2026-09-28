@@ -9,6 +9,7 @@ using LibVLCSharp.MAUI;
 using Microsoft.Extensions.Logging;
 
 using RadioApp.Extensions;
+using RadioApp.Services;
 using RadioApp.ViewModels;
 using RadioApp.Views;
 
@@ -19,7 +20,8 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
 #if ANDROID
-        Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("RemoveUnderline", (handler, _) => handler.PlatformView.BackgroundTintList =
+        Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("RemoveUnderline", (handler, _) => handler.PlatformView.BackgroundTintList
+ =
                 Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent));
 #endif
         var builder = MauiApp.CreateBuilder();
@@ -33,6 +35,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<StationSearchViewModel>();
         builder.Services.AddSingleton<FavoriteStationsViewModel>();
+        builder.Services.AddSingleton<IRadioPlaybackService, RadioPlaybackService>();
         builder.Services.AddScoped<IFavoriteStationRepository, FavoriteStationRepository>();
         builder.AddLocalDatabase();
 #if DEBUG
