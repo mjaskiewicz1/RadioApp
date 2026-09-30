@@ -10,7 +10,7 @@ using VlcMediaPlayer = LibVLCSharp.Shared.MediaPlayer;
 
 namespace RadioApp.Services;
 
-public sealed class RadioPlaybackService(
+public sealed partial class RadioPlaybackService(
     ILogger<RadioPlaybackService> logger,
     IPlaybackNotificationService playbackNotificationService) : IRadioPlaybackService, IDisposable
 {

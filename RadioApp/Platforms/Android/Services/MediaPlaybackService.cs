@@ -9,7 +9,6 @@ using Android.Media.Session;
 using Android.OS;
 
 using RadioApp.Interfaces;
-using RadioApp.Services;
 
 // ReSharper disable once CheckNamespace
 namespace RadioApp.Platforms.Android;
