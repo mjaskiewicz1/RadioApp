@@ -118,10 +118,8 @@ public class MediaPlaybackService : Service
         using var icon = Icon.CreateWithResource(this,
             isPlaying ? ResourceConstant.Drawable.media_pause : ResourceConstant.Drawable.media_play);
 
-        var control = new Notification.Action.Builder(
-            icon,
-            isPlaying ? "Pauza" : "Odtwórz",
-            actionPendingIntent).Build();
+        var control =
+            new Notification.Action.Builder(icon, isPlaying ? "Pauza" : "Odtwórz", actionPendingIntent).Build();
 
         return new Notification.Builder(this, ChannelId)
             .SetSmallIcon(ResourceConstant.Drawable.radio_notification)
