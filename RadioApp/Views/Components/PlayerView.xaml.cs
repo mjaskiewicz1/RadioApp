@@ -1,6 +1,9 @@
 using Core.Interfaces;
 using Core.Models;
 
+using RadioApp.Interfaces;
+using RadioApp.Services;
+
 namespace RadioApp.Views.Components;
 
 public partial class PlayerView

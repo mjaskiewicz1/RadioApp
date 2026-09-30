@@ -1,7 +1,8 @@
-using Core.Interfaces;
 using Core.Models;
 
 using Microsoft.Extensions.Logging;
+
+using RadioApp.Interfaces;
 
 using VlcLibVLC = LibVLCSharp.Shared.LibVLC;
 using VlcMedia = LibVLCSharp.Shared.Media;

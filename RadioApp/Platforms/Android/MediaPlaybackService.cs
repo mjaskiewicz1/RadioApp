@@ -8,9 +8,11 @@ using Android.Media;
 using Android.Media.Session;
 using Android.OS;
 
-using Core.Interfaces;
+using RadioApp.Interfaces;
+using RadioApp.Services;
 
-namespace RadioApp;
+// ReSharper disable once CheckNamespace
+namespace RadioApp.Platforms.Android;
 
 [Service(Exported = false, ForegroundServiceType = ForegroundService.TypeMediaPlayback)]
 public class MediaPlaybackService : Service

@@ -1,6 +1,6 @@
 using Core.Models;
 
-namespace Core.Interfaces;
+namespace RadioApp.Interfaces;
 
 public interface IRadioPlaybackService
 {
