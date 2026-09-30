@@ -113,17 +113,11 @@ public class MediaPlaybackService : Service
         var actionIntent = new Intent(this, typeof(MediaPlaybackService))
             .SetAction(nameof(TogglePlayback));
 
-        var actionPendingIntent = PendingIntent.GetService(
-            this,
-            1,
-            actionIntent,
+        var actionPendingIntent = PendingIntent.GetService(this, 1, actionIntent,
             PendingIntentFlags.UpdateCurrent | PendingIntentFlags.Immutable);
 
-        using var icon = Icon.CreateWithResource(
-            this,
-            isPlaying
-                ? ResourceConstant.Drawable.media_pause
-                : ResourceConstant.Drawable.media_play);
+        using var icon = Icon.CreateWithResource(this,
+            isPlaying ? ResourceConstant.Drawable.media_pause : ResourceConstant.Drawable.media_play);
 
         var control = new Notification.Action.Builder(
             icon,
@@ -160,10 +154,7 @@ public class MediaPlaybackService : Service
             .AddCategory(Intent.CategoryLauncher)
             .SetFlags(ActivityFlags.ClearTop | ActivityFlags.SingleTop);
 
-        return PendingIntent.GetActivity(
-            this,
-            0,
-            intent,
+        return PendingIntent.GetActivity(this, 0, intent,
             PendingIntentFlags.UpdateCurrent | PendingIntentFlags.Immutable);
     }
 
