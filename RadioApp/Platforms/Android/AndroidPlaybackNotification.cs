@@ -1,8 +1,7 @@
-using RadioApp.Services;
-
 using Android.Content;
 
 using RadioApp.Interfaces;
+using RadioApp.Services;
 
 using AndroidApplication = Android.App.Application;
 

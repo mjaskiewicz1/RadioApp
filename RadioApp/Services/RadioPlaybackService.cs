@@ -11,7 +11,7 @@ using VlcMediaPlayer = LibVLCSharp.Shared.MediaPlayer;
 
 namespace RadioApp.Services;
 
-public sealed class RadioPlaybackService(ILogger<RadioPlaybackService> logger) : IRadioPlaybackService, IDisposable
+public sealed partial class RadioPlaybackService(ILogger<RadioPlaybackService> logger) : IRadioPlaybackService, IDisposable
 {
     private VlcLibVLC? _libVlc;
     private VlcMediaPlayer? _mediaPlayer;

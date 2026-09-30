@@ -66,8 +66,7 @@ public class MediaPlaybackService : Service
 
     public override void OnDestroy()
     {
-        if (_playbackService is not null)
-            _playbackService.StateChanged -= OnPlaybackStateChanged;
+        _playbackService?.StateChanged -= OnPlaybackStateChanged;
 
         StopForeground(StopForegroundFlags.Remove);
         _mediaSession?.Release();
