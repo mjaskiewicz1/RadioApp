@@ -1,6 +1,6 @@
 namespace RadioApp.Interfaces;
 
-public interface IPlaybackNotification
+public interface IPlaybackNotificationService
 {
     void Start();
     void Stop();

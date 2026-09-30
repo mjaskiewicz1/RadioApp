@@ -1,14 +1,14 @@
 using Android.Content;
 
 using RadioApp.Interfaces;
-using RadioApp.Services;
+
 
 using AndroidApplication = Android.App.Application;
 
 // ReSharper disable once CheckNamespace
-namespace RadioApp.Platforms.Android;
+namespace RadioApp.Platforms.Android.Services;
 
-public sealed class AndroidPlaybackNotification : IPlaybackNotification
+public sealed class AndroidPlaybackNotificationService : IPlaybackNotificationService
 {
     public void Start()
     {

@@ -126,7 +126,10 @@
         <DependentUpon>HeaderView.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="Platforms\Android\MediaPlaybackService.cs">
+      <Compile Update="Platforms\Android\Services\AndroidPlaybackNotificationService.cs">
+        <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
+      </Compile>
+      <Compile Update="Platforms\Android\Services\MediaPlaybackService.cs">
         <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
       </Compile>
     </ItemGroup>
