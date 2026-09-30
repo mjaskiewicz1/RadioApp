@@ -1,4 +1,3 @@
-using Core.Interfaces;
 using Core.Models;
 
 using Microsoft.Extensions.Logging;
@@ -11,12 +10,15 @@ using VlcMediaPlayer = LibVLCSharp.Shared.MediaPlayer;
 
 namespace RadioApp.Services;
 
-public sealed partial class RadioPlaybackService(ILogger<RadioPlaybackService> logger) : IRadioPlaybackService, IDisposable
+public sealed class RadioPlaybackService(
+    ILogger<RadioPlaybackService> logger,
+    IPlaybackNotificationService playbackNotificationService) : IRadioPlaybackService, IDisposable
 {
     private VlcLibVLC? _libVlc;
     private VlcMediaPlayer? _mediaPlayer;
     private VlcMedia? _media;
     private bool _disposed;
+    private bool _notificationStarted;
 
     public RadioStation? CurrentStation { get; private set; }
     public bool IsPlaying { get; private set; }
@@ -35,6 +37,8 @@ public sealed partial class RadioPlaybackService(ILogger<RadioPlaybackService> l
 
         try
         {
+            StartNotification();
+
             if (_mediaPlayer!.IsPlaying)
                 _mediaPlayer.Stop();
 
@@ -69,6 +73,8 @@ public sealed partial class RadioPlaybackService(ILogger<RadioPlaybackService> l
 
         try
         {
+            StartNotification();
+
             if (!_mediaPlayer.Play())
                 ReportPlaybackFailure();
         }
@@ -104,6 +110,10 @@ public sealed partial class RadioPlaybackService(ILogger<RadioPlaybackService> l
         {
             ReportPlaybackFailure(exception);
         }
+        finally
+        {
+            StopNotification();
+        }
     }
 
     public void Dispose()
@@ -112,6 +122,7 @@ public sealed partial class RadioPlaybackService(ILogger<RadioPlaybackService> l
             return;
 
         _disposed = true;
+        StopNotification();
         _mediaPlayer?.Dispose();
         _media?.Dispose();
         _libVlc?.Dispose();
@@ -166,6 +177,24 @@ public sealed partial class RadioPlaybackService(ILogger<RadioPlaybackService> l
         StateChanged?.Invoke(this, EventArgs.Empty);
     }
 
+    private void StartNotification()
+    {
+        if (_notificationStarted)
+            return;
+
+        playbackNotificationService.Start();
+        _notificationStarted = true;
+    }
+
+    private void StopNotification()
+    {
+        if (!_notificationStarted)
+            return;
+
+        _notificationStarted = false;
+        playbackNotificationService.Stop();
+    }
+
     private void ReportPlaybackFailure(Exception? exception = null)
     {
         if (_disposed)
@@ -175,6 +204,7 @@ public sealed partial class RadioPlaybackService(ILogger<RadioPlaybackService> l
             CurrentStation?.Name, CurrentStation?.StreamUrl);
 
         UpdateState(CurrentStation, false);
+        StopNotification();
         PlaybackFailed?.Invoke(this, EventArgs.Empty);
     }
 }
