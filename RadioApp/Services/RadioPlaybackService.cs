@@ -1,3 +1,4 @@
+using Core.Interfaces;
 using Core.Models;
 
 using Microsoft.Extensions.Logging;
@@ -143,7 +144,7 @@ public sealed class RadioPlaybackService(ILogger<RadioPlaybackService> logger) :
             _libVlc = null;
 
             logger.LogCritical(exception, "Failed to initialize LibVLC.");
-            PlaybackFailed?.Invoke(this, EventArgs.Empty);
+            InitializationFailed?.Invoke(this, EventArgs.Empty);
             return false;
         }
     }
