@@ -139,9 +139,12 @@ public class MediaPlaybackService : Service
     private void TogglePlayback()
     {
         if (_playbackService?.IsPlaying == true)
+        {
             _playbackService.Pause();
-        else
-            _playbackService?.Resume();
+            return;
+        }
+
+        _playbackService?.Resume();
     }
 
     private PendingIntent? CreateAppIntent()
