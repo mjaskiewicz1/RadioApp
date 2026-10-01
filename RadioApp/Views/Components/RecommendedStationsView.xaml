@@ -14,11 +14,11 @@
         <CollectionView Grid.Row="1" HeightRequest="130" Margin="0,12,0,0" ItemsSource="{Binding RecommendedStations}"
                         SelectionMode="None" HorizontalScrollBarVisibility="Never">
             <CollectionView.Header>
-                <BoxView WidthRequest="28" HeightRequest="1" Color="Transparent" />
+                <Grid WidthRequest="14" HeightRequest="130" BackgroundColor="#050607" />
             </CollectionView.Header>
 
             <CollectionView.Footer>
-                <BoxView WidthRequest="28" HeightRequest="1" Color="Transparent" />
+                <Grid WidthRequest="14" HeightRequest="130" BackgroundColor="#050607" />
             </CollectionView.Footer>
 
             <CollectionView.Triggers>
