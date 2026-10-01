@@ -19,7 +19,7 @@
 
             <CollectionView.Footer>
                 <Grid WidthRequest="14" HeightRequest="130" BackgroundColor="#050607" />
-            </CollectionView.Footer>
+            </CollectionView.Footer>                            
 
             <CollectionView.Triggers>
                 <DataTrigger TargetType="CollectionView" Binding="{Binding HasRecommendedError}" Value="True">
