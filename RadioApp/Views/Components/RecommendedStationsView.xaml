@@ -9,10 +9,18 @@
              x:DataType="viewModels:MainViewModel">
 
     <Grid RowDefinitions="Auto,Auto">
-        <Label Grid.Row="0" Text="POLECANE" FontAttributes="Bold" FontSize="13" TextColor="#59D65D" />
+        <Label Grid.Row="0" Margin="28,0,28,0" Text="POLECANE" FontAttributes="Bold" FontSize="13" TextColor="#59D65D" />
 
         <CollectionView Grid.Row="1" HeightRequest="130" Margin="0,12,0,0" ItemsSource="{Binding RecommendedStations}"
                         SelectionMode="None" HorizontalScrollBarVisibility="Never">
+            <CollectionView.Header>
+                <BoxView WidthRequest="28" HeightRequest="1" Color="Transparent" />
+            </CollectionView.Header>
+
+            <CollectionView.Footer>
+                <BoxView WidthRequest="28" HeightRequest="1" Color="Transparent" />
+            </CollectionView.Footer>
+
             <CollectionView.Triggers>
                 <DataTrigger TargetType="CollectionView" Binding="{Binding HasRecommendedError}" Value="True">
                     <Setter Property="IsVisible" Value="False" />
@@ -45,7 +53,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <VerticalStackLayout Grid.Row="1" Margin="0,16,0,0" Spacing="10" IsVisible="False">
+        <VerticalStackLayout Grid.Row="1" Margin="28,16,28,0" Spacing="10" IsVisible="False">
             <VerticalStackLayout.Triggers>
                 <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding HasRecommendedError}" Value="True">
                     <Setter Property="IsVisible" Value="True" />

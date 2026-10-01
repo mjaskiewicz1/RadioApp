@@ -19,8 +19,9 @@
             <components:PlayerView CurrentStation="{Binding SelectedStation}" />
         </Grid>
 
-        <Grid x:Name="StationLists" Grid.Row="2" Padding="28,0,28,12" IsEnabled="False">
+        <Grid x:Name="StationLists" Grid.Row="2" Padding="0,0,0,12" IsEnabled="False">
             <components:StationSearchView
+                Margin="28,0,28,0"
                 BindingContext="{Binding Source={x:Reference Root}, Path=SearchViewModel, x:DataType=views:MainPage}"
                 FavoriteStations="{Binding Source={x:Reference Root}, Path=FavoriteStationsViewModel.FavoriteStations, x:DataType=views:MainPage}"
                 IsVisible="{Binding Source={x:Reference Root}, Path=SearchViewModel.IsSearchVisible, x:DataType=views:MainPage}"
@@ -39,7 +40,7 @@
                 <components:RecommendedStationsView StationSelected="OnStationSelected"
                                                      FavoriteAddRequested="OnFavoriteAddRequested" />
 
-                <components:FavoriteStationsView Grid.Row="1"
+                <components:FavoriteStationsView Grid.Row="1" Margin="28,0,28,0"
                     BindingContext="{Binding Source={x:Reference Root}, Path=FavoriteStationsViewModel, x:DataType=views:MainPage}"
                     StationSelected="OnStationSelected" FavoriteAddRequested="OnFavoriteAddRequested"
                     StationRemoveRequested="OnFavoriteStationRemoveRequested" />
